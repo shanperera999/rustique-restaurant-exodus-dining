@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rustique Restaurant - Exodus Dining | Nuwara Eliya</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            light: '#FAF5EB',
+                            DEFAULT: '#F2E8D8',
+                            dark: '#E2D4BF',
+                        },
+                        espresso: {
+                            light: '#4B3621',
+                            DEFAULT: '#2B1B17',
+                            dark: '#1A100E',
+                        },
+                        gold: {
+                            light: '#E6C667',
+                            DEFAULT: '#D4AF37',
+                            muted: '#C5A059',
+                            dark: '#B38B2D',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #F5D77F 0%, #D4AF37 50%, #B38B2D 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-espresso-pattern {
+            background-color: #1A100E;
+            background-image: radial-gradient(#2B1B17 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1A100E;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #C5A059;
+            border-radius: 3px;
+        }
+        .gold-glow {
+            box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-espresso-dark text-cream font-sans antialiased custom-scrollbar">
+
+    <!-- Navbar Header -->
+    <header class="sticky top-0 z-40 bg-espresso-dark/95 backdrop-blur-md border-b border-gold-muted/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Branding -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <img src="IMG_3964_beb93e.jpeg" 
+                         alt="The Rustique Restaurant Logo" 
+                         onerror="this.src='https://placehold.co/100x100/2B1B17/D4AF37?text=Rustique';"
+                         class="h-12 w-12 rounded-full border border-gold/40 object-cover shadow-md transition transform group-hover:scale-105">
+                    <div class="flex flex-col">
+                        <span class="font-serif text-lg sm:text-xl font-bold tracking-widest text-cream uppercase group-hover:text-gold transition-colors">The Rustique</span>
+                        <span class="text-[10px] sm:text-xs tracking-wider text-gold-muted font-medium">EXODUS DINING • NUWARA ELIYA</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#about" class="text-cream/80 hover:text-gold transition-colors">About</a>
+                    <a href="#experience" class="text-cream/80 hover:text-gold transition-colors">Atmosphere</a>
+                    <a href="#timings" class="text-cream/80 hover:text-gold transition-colors">Timings</a>
+                    <a href="#menus" class="text-cream/80 hover:text-gold transition-colors">Set Menus</a>
+                    <a href="#gallery" class="text-cream/80 hover:text-gold transition-colors">Gallery</a>
+                    <a href="#location" class="text-cream/80 hover:text-gold transition-colors">Location</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden sm:flex items-center">
+                    <button onclick="openBookingModal()" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-espresso-dark font-semibold text-xs uppercase tracking-widest shadow-lg hover:brightness-110 transition duration-300 transform hover:-translate-y-0.5 flex items-center gap-2 gold-glow">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Reserve Table
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="text-cream hover:text-gold p-2 rounded-md focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-espresso border-b border-gold-muted/20 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-cream hover:bg-espresso-dark hover:text-gold">About</a>
+            <a href="#experience" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-cream hover:bg-espresso-dark hover:text-gold">Atmosphere</a>
+            <a href="#timings" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-cream hover:bg-espresso-dark hover:text-gold">Operating Timings</a>
+            <a href="#menus" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-cream hover:bg-espresso-dark hover:text-gold">Set Menus</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-cream hover:bg-espresso-dark hover:text-gold">Interior Gallery</a>
+            <a href="#location" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-cream hover:bg-espresso-dark hover:text-gold">Location & Contact</a>
+            <button onclick="toggleMobileMenu(); openBookingModal();" class="w-full mt-2 px-5 py-3 rounded-full bg-gold text-espresso-dark font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-base"></i> Reserve Table via WhatsApp
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex items-center justify-center py-20 overflow-hidden">
+        <!-- Background Image with Gradient Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="IMG_8895_beb93e.jpg" 
+                 alt="The Rustique Interior" 
+                 onerror="this.src='https://placehold.co/1920x1080/1A100E/FAF5EB?text=Dining+Room';"
+                 class="w-full h-full object-cover filter brightness-75 scale-105 transform animate-pulse duration-[10000ms]">
+            <div class="absolute inset-0 bg-gradient-to-t from-espresso-dark via-espresso-dark/80 to-espresso-dark/50"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
+            <!-- Central Golden Badge / Logo -->
+            <div class="mb-6 p-1.5 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light shadow-2xl gold-glow">
+                <img src="IMG_3964_beb93e.jpeg" 
+                     alt="Exodus Dining Badge" 
+                     onerror="this.src='https://placehold.co/150x150/2B1B17/D4AF37?text=Logo';"
+                     class="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-espresso-dark shadow-inner">
+            </div>
+
+            <span class="text-gold uppercase text-xs sm:text-sm font-semibold tracking-[0.3em] mb-3">Exodus Dining • Sri Lanka</span>
+            
+            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-cream mb-6">
+                Flavors Worth the <span class="gold-gradient-text italic">Journey</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-cream/80 max-w-2xl font-light leading-relaxed mb-10">
+                An intimate boutique sanctuary in the cool misty hills of Nuwara Eliya. Indulge in thoughtfully crafted Sri Lankan heritage courses, highland breakfasts, and Western gourmet set menus.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <a href="#menus" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-espresso-dark font-bold text-xs uppercase tracking-widest shadow-xl hover:brightness-110 transition text-center">
+                    View Set Menus
+                </a>
+                <button onclick="openBookingModal()" class="px-8 py-4 rounded-full border border-gold/60 text-gold hover:bg-gold/10 font-bold text-xs uppercase tracking-widest transition flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Book via WhatsApp
+                </button>
+            </div>
+
+            <div class="mt-12 flex flex-wrap justify-center items-center gap-6 text-cream/70 text-xs tracking-wider">
+                <span class="flex items-center gap-2"><i class="fa-solid fa-sun text-gold"></i> Breakfast: 7:30 AM – 10:30 AM</span>
+                <span class="h-3 w-px bg-gold/30 hidden sm:block"></span>
+                <span class="flex items-center gap-2"><i class="fa-solid fa-moon text-gold"></i> Dinner: 6:30 PM – 10:00 PM</span>
+                <span class="h-3 w-px bg-gold/30 hidden sm:block"></span>
+                <span class="flex items-center gap-2"><i class="fa-solid fa-chair text-gold"></i> Intimate 4-Table Seating</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timings Section -->
+    <section id="timings" class="py-16 bg-espresso border-y border-gold-muted/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <span class="text-gold text-xs font-semibold tracking-widest uppercase block mb-2">Service Hours</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-cream">Breakfast & Dinner Timings</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Breakfast Card -->
+                <div class="bg-espresso-dark/90 p-8 rounded-3xl border border-gold/30 text-center relative overflow-hidden group hover:border-gold transition duration-300 shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl group-hover:bg-gold group-hover:text-espresso transition">
+                        <i class="fa-solid fa-sun"></i>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-gold">Morning Service</span>
+                    <h3 class="font-serif text-2xl font-bold text-cream mt-1 mb-2">Highland Breakfast</h3>
+                    <p class="font-serif text-3xl font-bold text-gold my-3">7:30 AM – 10:30 AM</p>
+                    <p class="text-xs text-cream/70 leading-relaxed font-light">Freshly brewed Ceylon tea, warm pastries, seasonal tropical fruits, and custom egg setups in the crisp hill-country air.</p>
+                </div>
+
+                <!-- Dinner Card -->
+                <div class="bg-espresso-dark/90 p-8 rounded-3xl border border-gold/30 text-center relative overflow-hidden group hover:border-gold transition duration-300 shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl group-hover:bg-gold group-hover:text-espresso transition">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-gold">Evening Service</span>
+                    <h3 class="font-serif text-2xl font-bold text-cream mt-1 mb-2">Boutique Dinner</h3>
+                    <p class="font-serif text-3xl font-bold text-gold my-3">6:30 PM – 10:00 PM</p>
+                    <p class="text-xs text-cream/70 leading-relaxed font-light">Warm candlelight, slatted timber accents, and curated multi-course Sri Lankan heritage feasts or Western gourmet dinners.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story / About Section -->
+    <section id="about" class="py-24 bg-espresso-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Content Column -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="inline-flex items-center gap-2 text-gold text-xs font-semibold tracking-widest uppercase">
+                        <span class="h-px w-8 bg-gold"></span>
+                        Handcrafted Warmth & Heritage
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-cream leading-tight">
+                        A Cozy Sanctuary in <br><span class="italic text-gold-muted">Nuwara Eliya’s Hills</span>
+                    </h2>
+                    <p class="text-cream/80 text-sm sm:text-base leading-relaxed font-light">
+                        Step away from the chilly mountain mist into our warmly lit dining haven. At <strong class="text-cream">The Rustique Restaurant</strong>, every detail is intentional—from custom slatted timber partitions to exposed brick walls that radiate rustic character.
+                    </p>
+                    <p class="text-cream/80 text-sm sm:text-base leading-relaxed font-light">
+                        Our dining space is adorned with woven rattan pendant lamps casting soft radial light patterns, fine lace tablecloths, and mirrored wooden shelves. We blend Sri Lankan culinary soul with global gourmet techniques for an unforgettable dining experience.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gold-muted/20">
+                        <div>
+                            <span class="block font-serif text-3xl font-bold text-gold">4 Tables</span>
+                            <span class="text-xs text-cream/60 uppercase tracking-wider">Boutique Intimacy</span>
+                        </div>
+                        <div>
+                            <span class="block font-serif text-3xl font-bold text-gold">100%</span>
+                            <span class="text-xs text-cream/60 uppercase tracking-wider">Fresh Local Ingredients</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side-by-side Feature Grid Images -->
+                <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <div class="overflow-hidden rounded-2xl border border-gold-muted/20 shadow-xl group cursor-pointer" onclick="openLightbox('IMG_8896_beb93e.jpg', 'Exposed Brick Wall & Lace Linens')">
+                            <img src="IMG_8896_beb93e.jpg" 
+                                 alt="Exposed Brick Wall & Lace Table Setup" 
+                                 onerror="this.src='https://placehold.co/600x800/2B1B17/F2E8D8?text=Brick+Wall+Dining';"
+                                 class="w-full h-64 sm:h-80 object-cover transform transition duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="p-4 bg-espresso/80 rounded-xl border border-gold-muted/10 text-center">
+                            <span class="text-xs font-serif italic text-gold">Exposed Brick & Lace Linens</span>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <div class="overflow-hidden rounded-2xl border border-gold-muted/20 shadow-xl group cursor-pointer" onclick="openLightbox('IMG_8892_beb93e.jpg', 'Warm Slatted Timber Partition')">
+                            <img src="IMG_8892_beb93e.jpg" 
+                                 alt="Slatted Wooden Partition View" 
+                                 onerror="this.src='https://placehold.co/600x800/2B1B17/F2E8D8?text=Timber+Partition';"
+                                 class="w-full h-64 sm:h-80 object-cover transform transition duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="p-4 bg-espresso/80 rounded-xl border border-gold-muted/10 text-center">
+                            <span class="text-xs font-serif italic text-gold">Warm Slatted Partition</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience / Atmosphere Section -->
+    <section id="experience" class="py-20 bg-espresso border-t border-gold-muted/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-gold text-xs font-semibold tracking-widest uppercase block mb-2">Boutique Atmosphere</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-cream mb-12">Designed for Unhurried Dining</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-2xl bg-espresso-dark border border-gold-muted/20 hover:border-gold/40 transition text-left group">
+                    <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold group-hover:text-espresso transition-colors">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-cream mb-3">Ambient Lighting</h3>
+                    <p class="text-cream/70 text-sm leading-relaxed font-light">
+                        Woven rattan pendant lamps emit shadow-patterned glow across rich wooden textures for a serene atmosphere.
+                    </p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-2xl bg-espresso-dark border border-gold-muted/20 hover:border-gold/40 transition text-left group">
+                    <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold group-hover:text-espresso transition-colors">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-cream mb-3">Curated Multi-Course Menus</h3>
+                    <p class="text-cream/70 text-sm leading-relaxed font-light">
+                        Carefully crafted multi-course set dining showcasing authentic Ceylon spices and Western culinary classics.
+                    </p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-2xl bg-espresso-dark border border-gold-muted/20 hover:border-gold/40 transition text-left group">
+                    <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold group-hover:text-espresso transition-colors">
+                        <i class="fa-solid fa-wine-glass"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-cream mb-3">Intimate Seating</h3>
+                    <p class="text-cream/70 text-sm leading-relaxed font-light">
+                        Limited tables ensure private conversations, personalized guest attention, and relaxed high-altitude dining.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Set Menus Section -->
+    <section id="menus" class="py-24 bg-espresso-dark border-t border-gold-muted/20 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-gold text-xs font-semibold tracking-widest uppercase block mb-2">Exodus Culinary Creations</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-cream">Exquisite Set Menus</h2>
+                <p class="text-cream/70 text-sm mt-3 max-w-xl mx-auto">Explore our Highland Breakfast, Sri Lankan Heritage Feast, or Western Gourmet Course.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex justify-center mb-10 overflow-x-auto">
+                <div class="inline-flex p-1.5 rounded-full bg-espresso border border-gold-muted/30 whitespace-nowrap">
+                    <button id="tabBreakfast" onclick="switchMenu('breakfast')" class="px-5 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 text-cream/70 hover:text-gold">
+                        <i class="fa-solid fa-sun mr-2"></i> Highland Breakfast
+                    </button>
+                    <button id="tabSriLankan" onclick="switchMenu('srilankan')" class="px-5 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 bg-gold text-espresso-dark shadow-md">
+                        <i class="fa-solid fa-pepper-hot mr-2"></i> Royal Ceylon Heritage
+                    </button>
+                    <button id="tabWestern" onclick="switchMenu('western')" class="px-5 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 text-cream/70 hover:text-gold">
+                        <i class="fa-solid fa-wine-bottle mr-2"></i> Exodus Western Gourmet
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab 1: Breakfast Set -->
+            <div id="menuBreakfast" class="hidden transition-all duration-500">
+                <div class="bg-espresso rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-2xl relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-gold-muted/20 gap-4">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-gold font-semibold">Morning Course (7:30 AM – 10:30 AM)</span>
+                            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mt-1">Highland Country Breakfast Set</h3>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <span class="block font-serif text-2xl sm:text-3xl font-bold text-gold">LKR 3,800 <span class="text-xs font-sans text-cream/60">net</span></span>
+                            <span class="text-[11px] text-cream/50">Per Guest</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 mt-8">
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">1</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Fresh Morning Start</h4>
+                                <p class="text-sm text-cream/80 font-light">Tropical seasonal fruit platter & fresh highland fruit juice or smoothie.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">2</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Main Breakfast Choice</h4>
+                                <p class="text-sm text-cream/80 font-light">Traditional Sri Lankan Milk Rice (Kiribath) with Lunu Miris & Seeni Sambal OR Artisan Omelette with toasted sourdough, grilled tomato & bacon/sausage.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">3</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Highland Brew</h4>
+                                <p class="text-sm text-cream/80 font-light">Pot of single-origin Ceylon Tea or freshly brewed espresso coffee.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gold-muted/20 flex justify-end">
+                        <button onclick="openBookingModal('Highland Country Breakfast Set')" class="px-6 py-3 rounded-full bg-gold text-espresso-dark font-bold text-xs uppercase tracking-widest hover:brightness-110 transition">
+                            Reserve Breakfast
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Sri Lankan Heritage Set -->
+            <div id="menuSriLankan" class="block transition-all duration-500">
+                <div class="bg-espresso rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-2xl relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-gold-muted/20 gap-4">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-gold font-semibold">Dinner Course (6:30 PM – 10:00 PM)</span>
+                            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mt-1">Royal Ceylon Heritage Set</h3>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <span class="block font-serif text-2xl sm:text-3xl font-bold text-gold">LKR 6,500 <span class="text-xs font-sans text-cream/60">net</span></span>
+                            <span class="text-[11px] text-cream/50">Per Guest • Multi-course</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 mt-8">
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">1</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Soup Starter</h4>
+                                <p class="text-sm text-cream/80 font-light">Slow-roasted Pumpkin & Coconut Cream Soup with toasted Ceylon curry leaves and garlic crostini.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">2</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Grand Heritage Rice & Curry Spread</h4>
+                                <p class="text-sm text-cream/80 font-light">Fragrant Highland Samba Rice accompanied by your choice of main:</p>
+                                <ul class="text-xs text-gold-muted mt-2 space-y-1 list-disc list-inside">
+                                    <li>Slow-simmered Black Pork Curry OR Spiced Hill-Country Chicken Curry</li>
+                                    <li>Lagoon Prawn Curry in Coconut Gravy (+ LKR 800)</li>
+                                    <li>Served with Dambulla Cashew Curry, Fried Aubergine (Moju), Gotukola Sambal, Pol Sambal & Crispy Papadam</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">3</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Sweet Finale</h4>
+                                <p class="text-sm text-cream/80 font-light">Traditional Watalappan (Jaggery Custard with Cardamom & Cashews) OR Thick Curd drizzled with Pure Kithul Treacle.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">4</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Ceylon High-Grown Tea</h4>
+                                <p class="text-sm text-cream/80 font-light">Freshly brewed Nuwara Eliya Pekoe Tea served with ginger cookies.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gold-muted/20 flex justify-end">
+                        <button onclick="openBookingModal('Royal Ceylon Heritage Set')" class="px-6 py-3 rounded-full bg-gold text-espresso-dark font-bold text-xs uppercase tracking-widest hover:brightness-110 transition">
+                            Reserve Dinner
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Western Gourmet Course -->
+            <div id="menuWestern" class="hidden transition-all duration-500">
+                <div class="bg-espresso rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-2xl relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-gold-muted/20 gap-4">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-gold font-semibold">Dinner Course (6:30 PM – 10:00 PM)</span>
+                            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mt-1">Exodus Gourmet Western Course</h3>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <span class="block font-serif text-2xl sm:text-3xl font-bold text-gold">LKR 7,800 <span class="text-xs font-sans text-cream/60">net</span></span>
+                            <span class="text-[11px] text-cream/50">Per Guest • 4-Course Menu</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 mt-8">
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">1</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Amuse-Bouche & Appetizer</h4>
+                                <p class="text-sm text-cream/80 font-light">Garlic Herb Sautéed Wild Mushroom Bruschetta topped with shaved parmesan and balsamic glaze.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">2</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Soup Course</h4>
+                                <p class="text-sm text-cream/80 font-light">Rich Roasted Tomato & Basil Bisque accompanied by warm artisan garlic sourdough bread.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">3</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Gourmet Entrée Choice</h4>
+                                <p class="text-sm text-cream/80 font-light">Select your main course signature dish:</p>
+                                <ul class="text-xs text-gold-muted mt-2 space-y-1 list-disc list-inside">
+                                    <li>Pan-Seared Norwegian Salmon with Buttered Nuwara Eliya Baby Potatoes & Asparagus</li>
+                                    <li>Grilled Australian Beef Tenderloin with Rosemary Red Wine Reduction & Truffled Mash</li>
+                                    <li>Creamy Truffle & Wild Mushroom Fettuccine (Vegetarian Option)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-serif text-sm font-bold flex-shrink-0 mt-1">4</span>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Dessert & Coffee</h4>
+                                <p class="text-sm text-cream/80 font-light">Warm Highland Strawberry & Vanilla Tart served with single-origin Italian Espresso or Cappuccino.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gold-muted/20 flex justify-end">
+                        <button onclick="openBookingModal('Exodus Gourmet Western Course')" class="px-6 py-3 rounded-full bg-gold text-espresso-dark font-bold text-xs uppercase tracking-widest hover:brightness-110 transition">
+                            Reserve Dinner
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-espresso relative border-t border-gold-muted/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-gold text-xs font-semibold tracking-widest uppercase block mb-2">Interior Gallery</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-cream">Step Inside The Rustique</h2>
+                </div>
+                <p class="text-cream/70 text-sm max-w-md mt-4 md:mt-0 font-light">
+                    Explore the intimate craftsmanship, warm lighting, brick details, and cozy timber corners of our Exodus Dining room.
+                </p>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Image 1 -->
+                <div class="group relative overflow-hidden rounded-2xl border border-gold-muted/20 cursor-pointer shadow-lg" onclick="openLightbox('IMG_8896_beb93e.jpg', 'Mirrored Wooden Shelves & Woven Pendant Light')">
+                    <img src="IMG_8896_beb93e.jpg" 
+                         alt="Shelves & Woven Light Reflection" 
+                         onerror="this.src='https://placehold.co/600x600/2B1B17/FAF5EB?text=Shelves+%26+Mirror';"
+                         class="w-full h-72 object-cover transform transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-espresso-dark/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <span class="text-gold text-xs uppercase tracking-wider font-semibold">Interior Corner</span>
+                        <h4 class="text-cream font-serif text-lg font-bold">Mirrored Shelves & Warm Woven Pendant</h4>
+                    </div>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="group relative overflow-hidden rounded-2xl border border-gold-muted/20 cursor-pointer shadow-lg sm:col-span-2 lg:col-span-1" onclick="openLightbox('IMG_8895_beb93e.jpg', 'Full Dining Room Archway & Grid Doors')">
+                    <img src="IMG_8895_beb93e.jpg" 
+                         alt="Full Room View showing Archway" 
+                         onerror="this.src='https://placehold.co/600x600/2B1B17/FAF5EB?text=Main+Dining+Room';"
+                         class="w-full h-72 object-cover transform transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-espresso-dark/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <span class="text-gold text-xs uppercase tracking-wider font-semibold">Grand Perspective</span>
+                        <h4 class="text-cream font-serif text-lg font-bold">Archway & Warm Timber Dining Room</h4>
+                    </div>
+                </div>
+
+                <!-- Image 3 -->
+                <div class="group relative overflow-hidden rounded-2xl border border-gold-muted/20 cursor-pointer shadow-lg" onclick="openLightbox('IMG_8892_beb93e.jpg', 'Slatted Wooden Partition & Intimate Seating')">
+                    <img src="IMG_8892_beb93e.jpg" 
+                         alt="Slatted Wooden Partition" 
+                         onerror="this.src='https://placehold.co/600x600/2B1B17/FAF5EB?text=Timber+Partition';"
+                         class="w-full h-72 object-cover transform transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-espresso-dark/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+                        <span class="text-gold text-xs uppercase tracking-wider font-semibold">Craftsmanship</span>
+                        <h4 class="text-cream font-serif text-lg font-bold">Slatted Timber Partitions & Atmosphere</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section id="location" class="py-24 bg-espresso-dark border-t border-gold-muted/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Info Column -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-gold text-xs font-semibold tracking-widest uppercase block">Find & Connect</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-cream">Visit Our Sanctuary in the Hills</h2>
+                    <p class="text-cream/80 text-sm sm:text-base font-light leading-relaxed">
+                        Nestled in the serene mountain climate of Nuwara Eliya, The Rustique Restaurant offers an exclusive 4-table boutique dining experience. Advance reservations are strongly recommended to ensure your table.
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Location</h4>
+                                <p class="text-sm text-cream/70">Nuwara Eliya, Sri Lanka (Exodus Dining)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold flex-shrink-0 mt-1">
+                                <i class="fa-regular fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Operating Hours</h4>
+                                <p class="text-sm text-cream/70">Breakfast: 7:30 AM – 10:30 AM | Dinner: 6:30 PM – 10:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold flex-shrink-0 mt-1">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg font-bold text-cream">Direct WhatsApp Reservations</h4>
+                                <p class="text-sm text-cream/70">+94 70 298 6611</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button onclick="openBookingModal()" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-espresso-dark font-bold text-xs uppercase tracking-widest shadow-xl hover:brightness-110 transition flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Reserve Table Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visual Card Column -->
+                <div class="lg:col-span-6">
+                    <div class="rounded-3xl p-8 bg-espresso border border-gold/30 shadow-2xl relative overflow-hidden text-center space-y-6">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light flex items-center justify-center text-espresso-dark text-3xl shadow-lg">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-cream">The Rustique Experience</h3>
+                        <p class="text-sm text-cream/70 font-light max-w-md mx-auto">
+                            Experience home-style culinary artistry paired with boutique interior elegance. Reserve one of our four intimate tables for your morning breakfast or cozy evening in the hills.
+                        </p>
+                        <div class="pt-2">
+                            <span class="inline-block px-4 py-2 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold tracking-wider">
+                                Limited to 4 Tables • Maximum Privacy
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-espresso border-t border-gold-muted/20 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <div class="flex items-center justify-center gap-3">
+                <img src="IMG_3964_beb93e.jpeg" alt="Logo" class="w-10 h-10 rounded-full border border-gold/40 object-cover" onerror="this.src='https://placehold.co/50x50/2B1B17/D4AF37?text=R';">
+                <span class="font-serif text-lg font-bold tracking-widest text-cream uppercase">The Rustique • Exodus Dining</span>
+            </div>
+            <p class="text-xs text-cream/50 max-w-md mx-auto">
+                An intimate boutique home-style restaurant in Nuwara Eliya, Sri Lanka. Serving handcrafted Sri Lankan heritage set menus, highland breakfasts, and Western gourmet courses.
+            </p>
+            <div class="flex justify-center flex-wrap gap-6 text-cream/60 text-sm">
+                <a href="#about" class="hover:text-gold transition">About</a>
+                <a href="#experience" class="hover:text-gold transition">Atmosphere</a>
+                <a href="#timings" class="hover:text-gold transition">Timings</a>
+                <a href="#menus" class="hover:text-gold transition">Set Menus</a>
+                <a href="#gallery" class="hover:text-gold transition">Gallery</a>
+                <a href="#location" class="hover:text-gold transition">Location</a>
+            </div>
+            <div class="pt-6 border-t border-gold-muted/10 text-xs text-cream/40">
+                &copy; 2026 The Rustique Restaurant - Exodus Dining, Nuwara Eliya. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden bg-espresso-dark/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-espresso border border-gold/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeBookingModal()" class="absolute top-6 right-6 text-cream/60 hover:text-gold text-xl focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="text-gold text-xs font-semibold tracking-widest uppercase block mb-1">Table Reservation</span>
+                <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream">Reserve Your Table</h3>
+                <p class="text-xs text-cream/70 mt-1">Bookings are sent directly to host Shan on WhatsApp.</p>
+            </div>
+
+            <form id="reservationForm" onsubmit="submitReservation(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-cream/80 mb-1">Full Name</label>
+                    <input type="text" id="resName" required class="w-full px-4 py-3 rounded-xl bg-espresso-dark border border-gold-muted/30 text-cream text-sm focus:outline-none focus:border-gold" placeholder="Enter your full name">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-cream/80 mb-1">Phone / WhatsApp Number</label>
+                    <input type="tel" id="resPhone" required class="w-full px-4 py-3 rounded-xl bg-espresso-dark border border-gold-muted/30 text-cream text-sm focus:outline-none focus:border-gold" placeholder="+94 7X XXX XXXX">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-cream/80 mb-1">Date</label>
+                        <input type="date" id="resDate" required class="w-full px-4 py-3 rounded-xl bg-espresso-dark border border-gold-muted/30 text-cream text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-cream/80 mb-1">Meal Service & Time</label>
+                        <select id="resTime" required class="w-full px-4 py-3 rounded-xl bg-espresso-dark border border-gold-muted/30 text-cream text-sm focus:outline-none focus:border-gold">
+                            <optgroup label="Breakfast Service (7:30 AM - 10:30 AM)">
+                                <option value="Breakfast - 7:30 AM">7:30 AM (Breakfast)</option>
+                                <option value="Breakfast - 8:00 AM">8:00 AM (Breakfast)</option>
+                                <option value="Breakfast - 8:30 AM">8:30 AM (Breakfast)</option>
+                                <option value="Breakfast - 9:00 AM">9:00 AM (Breakfast)</option>
+                                <option value="Breakfast - 9:30 AM">9:30 AM (Breakfast)</option>
+                                <option value="Breakfast - 10:00 AM">10:00 AM (Breakfast)</option>
+                            </optgroup>
+                            <optgroup label="Dinner Service (6:30 PM - 10:00 PM)">
+                                <option value="Dinner - 6:30 PM" selected>6:30 PM (Dinner)</option>
+                                <option value="Dinner - 7:00 PM">7:00 PM (Dinner)</option>
+                                <option value="Dinner - 7:30 PM">7:30 PM (Dinner)</option>
+                                <option value="Dinner - 8:00 PM">8:00 PM (Dinner)</option>
+                                <option value="Dinner - 8:30 PM">8:30 PM (Dinner)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-cream/80 mb-1">Number of Guests</label>
+                        <select id="resGuests" required class="w-full px-4 py-3 rounded-xl bg-espresso-dark border border-gold-muted/30 text-cream text-sm focus:outline-none focus:border-gold">
+                            <option value="2 Guests">2 Guests</option>
+                            <option value="3 Guests">3 Guests</option>
+                            <option value="4 Guests (Full Table)">4 Guests (Full Table)</option>
+                            <option value="1 Guest">1 Guest</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-cream/80 mb-1">Preferred Set Menu</label>
+                        <select id="resMenu" class="w-full px-4 py-3 rounded-xl bg-espresso-dark border border-gold-muted/30 text-cream text-sm focus:outline-none focus:border-gold">
+                            <option value="Royal Ceylon Heritage Set">Royal Ceylon Heritage Set (LKR 6,500)</option>
+                            <option value="Exodus Gourmet Western Course">Exodus Gourmet Western Course (LKR 7,800)</option>
+                            <option value="Highland Country Breakfast Set">Highland Country Breakfast Set (LKR 3,800)</option>
+                            <option value="General Booking / Undecided">General Booking</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-cream/80 mb-1">Special Notes / Dietary Preferences</label>
+                    <textarea id="resNotes" rows="2" class="w-full px-4 py-2.5 rounded-xl bg-espresso-dark border border-gold-muted/30 text-cream text-sm focus:outline-none focus:border-gold" placeholder="Vegetarian, spice preference, anniversary, etc. (Optional)"></textarea>
+                </div>
+                <button type="submit" class="w-full mt-2 py-4 rounded-xl bg-gradient-to-r from-gold-dark via-gold to-gold-light text-espresso-dark font-bold text-xs uppercase tracking-widest shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Send Reservation via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 hidden bg-espresso-dark/95 backdrop-blur-md flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="relative max-w-4xl w-full text-center" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-cream hover:text-gold text-2xl focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="lightboxImg" src="" alt="Enlarged View" class="max-h-[80vh] mx-auto rounded-2xl border border-gold/40 shadow-2xl object-contain">
+            <p id="lightboxCaption" class="mt-4 font-serif text-lg text-gold"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Scripts -->
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Menu Tab Switcher
+        function switchMenu(type) {
+            const btnBreakfast = document.getElementById('tabBreakfast');
+            const btnSriLankan = document.getElementById('tabSriLankan');
+            const btnWestern = document.getElementById('tabWestern');
+
+            const menuBreakfast = document.getElementById('menuBreakfast');
+            const menuSriLankan = document.getElementById('menuSriLankan');
+            const menuWestern = document.getElementById('menuWestern');
+
+            const activeClass = "px-5 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 bg-gold text-espresso-dark shadow-md";
+            const inactiveClass = "px-5 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 text-cream/70 hover:text-gold";
+
+            btnBreakfast.className = inactiveClass;
+            btnSriLankan.className = inactiveClass;
+            btnWestern.className = inactiveClass;
+
+            menuBreakfast.classList.add('hidden');
+            menuSriLankan.classList.add('hidden');
+            menuWestern.classList.add('hidden');
+
+            if (type === 'breakfast') {
+                btnBreakfast.className = activeClass;
+                menuBreakfast.classList.remove('hidden');
+            } else if (type === 'srilankan') {
+                btnSriLankan.className = activeClass;
+                menuSriLankan.classList.remove('hidden');
+            } else if (type === 'western') {
+                btnWestern.className = activeClass;
+                menuWestern.classList.remove('hidden');
+            }
+        }
+
+        // Booking Modal functions
+        function openBookingModal(menuName = '') {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+            if (menuName) {
+                const menuSelect = document.getElementById('resMenu');
+                for (let i = 0; i < menuSelect.options.length; i++) {
+                    if (menuSelect.options[i].value === menuName) {
+                        menuSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+        }
+
+        function submitReservation(event) {
+            event.preventDefault();
+            const name = document.getElementById('resName').value;
+            const phone = document.getElementById('resPhone').value;
+            const date = document.getElementById('resDate').value;
+            const time = document.getElementById('resTime').value;
+            const guests = document.getElementById('resGuests').value;
+            const menu = document.getElementById('resMenu').value;
+            const notes = document.getElementById('resNotes').value || 'None';
+
+            // Clean & Formatted Message structure sent directly to host WhatsApp number
+            const formattedMessage = 
+`✨ *NEW TABLE RESERVATION* ✨
+--------------------------------
+🏛️ *The Rustique Restaurant - Exodus Dining*
+
+👤 *Guest Name:* ${name}
+📞 *Contact Number:* ${phone}
+📅 *Reservation Date:* ${date}
+⏰ *Meal Service & Time:* ${time}
+👥 *Number of Guests:* ${guests}
+🍽️ *Requested Menu:* ${menu}
+📝 *Special Notes:* ${notes}
+
+--------------------------------
+_Please confirm table availability with the guest._`;
+
+            const encodedMessage = encodeURIComponent(formattedMessage);
+            const hostWhatsAppNumber = "94702986611"; // Formatted for WhatsApp API link
+            const whatsappUrl = `https://wa.me/${hostWhatsAppNumber}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            closeBookingModal();
+        }
+
+        // Lightbox functions
+        function openLightbox(src, caption) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImg');
+            const cap = document.getElementById('lightboxCaption');
+            
+            img.src = src;
+            cap.innerText = caption;
+            modal.classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
